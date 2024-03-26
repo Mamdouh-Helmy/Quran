@@ -231,11 +231,11 @@ header .links ul li a:hover{
     background-size: cover;
     position: relative;
   }
-  @media (max-width: 767px){
+/*   @media (max-width: 767px){
     .section {
       min-height: 80vh;
     }
-  }
+  } */
 .section .change-background{
   position: absolute;
   top: 50%;
