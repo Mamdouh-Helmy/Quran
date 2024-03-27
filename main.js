@@ -1,3 +1,169 @@
+document.addEventListener('DOMContentLoaded', function() {
+    let allText = document.querySelector('.allText');
+
+    async function riwayatData() {
+        const res = await fetch(`https://api.hadith.gading.dev/books/muslim?range=1-300`);
+        const data = await res.json();
+
+        const paragraphs = data.data.hadiths.map(ele => {
+            let p = document.createElement('p');
+            p.className = ele.number
+            p.textContent = ele.arab;
+            return p;
+        });
+
+        paragraphs.forEach(paragraph => {
+            allText.appendChild(paragraph);
+        });
+
+        let sliderpar = Array.from(document.querySelectorAll('.allText p'));
+        let slideCount1 = sliderpar.length;
+    
+        let currentSlider1 = 1;
+    
+        let nextButton1 = document.getElementById('next2');
+        let prevButton1 = document.getElementById('prev2');
+    
+        nextButton1.addEventListener('click' , nextSlide1)
+        prevButton1.addEventListener('click' , prevSlide1)
+    
+        if (sliderpar.length > 0) {
+            if(currentSlider1 == 1){
+                sliderpar[0].classList.add('active');
+                prevButton1.classList.add("disabled")
+            }
+        } else {
+            console.log("No paragraphs found");
+        }
+    
+        function nextSlide1(){
+            currentSlider1++;
+            theChecker1()
+        }
+    
+        function prevSlide1(){
+            currentSlider1--;
+            theChecker1()
+        }
+    
+        function theChecker1(){
+    
+            removeAllActive1()
+    
+            if (sliderpar[currentSlider1 - 1]) {
+                sliderpar[currentSlider1 - 1].classList.add('active');
+            }
+    
+            if(currentSlider1 == 1){
+                prevButton1.classList.add("disabled")
+            }else{
+                prevButton1.classList.remove("disabled")
+            }
+    
+            if(currentSlider1 == slideCount1){
+                nextButton1.classList.add("disabled")
+            }else{
+                nextButton1.classList.remove("disabled")
+            }
+        }
+    
+        function removeAllActive1(){
+    
+            sliderpar.forEach((ele) => {
+                ele.classList.remove("active")
+            })
+    
+        }
+    }
+
+    riwayatData();
+
+});
+
+
+
+let hed = document.getElementById('hed');
+
+    //Header
+    document.addEventListener('scroll', function () {
+        let hed = document.getElementById('hed');
+        if (window.scrollY >= 70) {
+            hed.classList.add('active');
+        } else {
+            hed.classList.remove('active');
+        }
+    });
+
+    //Media licnks
+    
+
+    document.addEventListener('click', function (event) {
+        if (event.target.id === 'two') {
+            let two = document.getElementById('two');
+            two.classList.toggle('active');
+    
+            let linksUl = document.querySelector("header .links ul");
+            if (two.classList.contains("active")) {
+                linksUl.classList.add("active");
+            } else {
+                linksUl.classList.remove("active");
+            }
+        }
+    });
+
+//Images Slider
+let sliderImages = Array.from(document.querySelectorAll('.section .images img'));
+
+
+let slideCount = sliderImages.length;
+
+let currentSlider = 1;
+
+let nextButton = document.getElementById('next');
+let prevButton = document.getElementById('prev');
+
+nextButton.addEventListener('click' , nextSlide)
+prevButton.addEventListener('click' , prevSlide)
+
+function nextSlide(){
+    currentSlider++;
+    theChecker()
+}
+
+function prevSlide(){
+    currentSlider--;
+    theChecker()
+}
+
+function theChecker(){
+
+    removeAllActive()
+
+    sliderImages[currentSlider - 1].classList.add('active');
+
+    if(currentSlider == 1){
+        prevButton.classList.add("disabled")
+    }else{
+        prevButton.classList.remove("disabled")
+    }
+
+    if(currentSlider == slideCount){
+        nextButton.classList.add("disabled")
+    }else{
+        nextButton.classList.remove("disabled")
+    }
+}
+theChecker()
+
+function removeAllActive(){
+    sliderImages.forEach((ele) => {
+        ele.classList.remove("active")
+    })
+}
+
+
+
+
 //Show data 
 let divs = `
 <div class="container" id="hedar">
@@ -32,6 +198,16 @@ let divs = `
         
     </div>
 </div>
+
+<div class="spikes" style="margin-bottom: 80px;"></div>
+
+    <div class="inputBig">
+        <div class="container">
+            <div class="input">
+                <input type="text" placeholder="أدخل الاسم" id="input1">
+            </div>
+        </div>
+    </div>
 
 <div class="surah">
     <div class="container">
@@ -171,12 +347,29 @@ async function getMoshaf(re){
     
 }
 
+let suraNames = []
+
 async function getSurah(surahServer, surahList){
+
+    let input2 = document.getElementById('input1');
 
     const res = await fetch(`https://mp3quran.net/api/v3/suwar`);
     const data = await res.json();
-    const suraNames = data.suwar;
+    suraNames = data.suwar;
 
+    allData(surahServer, surahList , suraNames.slice(0 , 20))
+
+    input2.addEventListener('input', function() {
+        document.querySelector('.surah .container').innerHTML = ''
+
+        const searchTerm = input2.value.trim().toLowerCase();
+        const filteredResults = suraNames.filter(re => re.name.toLowerCase().includes(searchTerm));
+        allData(surahServer, surahList , filteredResults.slice(0 , 4));
+    });
+
+}
+
+function allData(surahServer, surahList , suraNames){
     let surahContainer = document.querySelector('.surah .container');
 
     surahList.split(',').forEach(suraId => {
@@ -190,10 +383,8 @@ async function getSurah(surahServer, surahList){
                 h3.className = 'names';
                 h3.textContent = suraName.name;
 
-                // تحديد متغير يحمل الرقم
                 let suraNumber = parseInt(suraName.id);
 
-                // إضافة الصفر الإضافي وفقًا لشروط معينة
                 let suraIdWithLeadingZero = '';
                 if (suraNumber < 10) {
                     suraIdWithLeadingZero = `00${suraNumber}`;
@@ -219,82 +410,66 @@ async function getSurah(surahServer, surahList){
     });
 }
 
-let hed = document.getElementById('hed');
 
-    //Header
-    document.addEventListener('scroll', function () {
-        let hed = document.getElementById('hed');
-        if (window.scrollY >= 70) {
-            hed.classList.add('active');
-        } else {
-            hed.classList.remove('active');
-        }
+
+let textQuran = document.getElementById('textQuran');
+let input1 = document.getElementById('input1');
+let resultData = [];
+
+async function fetchData() {
+    const res = await fetch(`https://www.mp3quran.net/api/v3/tafsir`);
+    const data = await res.json();
+    resultData = data.tafasir.soar;
+
+    textQuran.innerHTML = data.tafasir.name;
+}
+
+async function init() {
+    await fetchData();
+    
+    build(resultData.slice(0,20), document.querySelector('.Interpretation .container'));
+
+    input1.addEventListener('input', function() {
+
+        const searchTerm = input1.value.trim().toLowerCase();
+        const filteredResults = resultData.filter(re => re.name.toLowerCase().includes(searchTerm));
+        build(filteredResults.slice(0,2), document.querySelector('.Interpretation .container'));
+
     });
 
-    //Media licnks
-    
 
-    document.addEventListener('click', function (event) {
-        console.log(event.target)
-        if (event.target.id === 'two') {
-            let two = document.getElementById('two');
-            two.classList.toggle('active');
-    
-            let linksUl = document.querySelector("header .links ul");
-            if (two.classList.contains("active")) {
-                linksUl.classList.add("active");
-            } else {
-                linksUl.classList.remove("active");
-            }
-        }
+}
+
+function build(data, container) {
+    container.innerHTML = '';
+
+    const audioElements = document.querySelectorAll('audio');
+    audioElements.forEach(audio => {
+        audio.pause();
+        audio.remove(); 
     });
 
-//Images Slider
-let sliderImages = Array.from(document.querySelectorAll('.section .images img'));
+    data.forEach(ele => {
+            if (ele.id === 224 || ele.id === 222 || ele.id === 223 || ele.id === 230 || ele.id === 229) return;
+        try {
+            let div = document.createElement('div');
+            div.className = 'box';
 
+            let h3 = document.createElement('h3');
+            h3.className = 'names';
+            h3.textContent = ele.name;
 
-let slideCount = sliderImages.length;
+            let audio = document.createElement('audio');
+            audio.src = ele.url;
+            audio.controls = true;
 
-let currentSlider = 1;
-
-let nextButton = document.getElementById('next');
-let prevButton = document.getElementById('prev');
-
-nextButton.addEventListener('click' , nextSlide)
-prevButton.addEventListener('click' , prevSlide)
-
-function nextSlide(){
-    currentSlider++;
-    theChecker()
+            div.appendChild(h3);
+            div.appendChild(audio);
+            container.appendChild(div);
+        } catch (error) {
+            console.log(error);
+        }
+    });
 }
 
-function prevSlide(){
-    currentSlider--;
-    theChecker()
-}
-
-function theChecker(){
-
-    removeAllActive()
-
-    sliderImages[currentSlider - 1].classList.add('active');
-
-    if(currentSlider == 1){
-        prevButton.classList.add("disabled")
-    }else{
-        prevButton.classList.remove("disabled")
-    }
-
-    if(currentSlider == slideCount){
-        nextButton.classList.add("disabled")
-    }else{
-        nextButton.classList.remove("disabled")
-    }
-}
-theChecker()
-
-function removeAllActive(){
-    sliderImages.forEach((ele) => {
-        ele.classList.remove("active")
-    })
-}
+init();
