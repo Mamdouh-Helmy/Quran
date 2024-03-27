@@ -305,7 +305,7 @@ header .links ul li a:hover{
   }
   @media (max-width: 767px){
     .section {
-      min-height: 88vh;
+      min-height: 92vh;
     }
   }
 .section .change-background{
