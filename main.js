@@ -1,81 +1,28 @@
-    //Header
-    let hed = document.getElementById('hed');
-
-    window.onscroll = function () {
-        if(this.scrollY >= 90){
-            hed.classList.add('active')
-        }else{
-            hed.classList.remove('active')
-        }
-    }
-
-    //Media licnks
-    let two = document.getElementById('two');
-
-    two.onclick = () =>{ 
-        two.classList.toggle('active');
-
-        if(two.classList.contains("active")){
-            document.querySelector("header .links ul").classList.add("active")
-        }else{
-            document.querySelector("header .links ul").classList.remove("active")
-        }
-
-    }
-
-
-//Images Slider
-let sliderImages = Array.from(document.querySelectorAll('.section .images img'));
-
-
-let slideCount = sliderImages.length;
-
-let currentSlider = 1;
-
-let nextButton = document.getElementById('next');
-let prevButton = document.getElementById('prev');
-
-nextButton.addEventListener('click' , nextSlide)
-prevButton.addEventListener('click' , prevSlide)
-
-function nextSlide(){
-    currentSlider++;
-    theChecker()
-}
-
-function prevSlide(){
-    currentSlider--;
-    theChecker()
-}
-
-function theChecker(){
-
-    removeAllActive()
-
-    sliderImages[currentSlider - 1].classList.add('active');
-
-    if(currentSlider == 1){
-        prevButton.classList.add("disabled")
-    }else{
-        prevButton.classList.remove("disabled")
-    }
-
-    if(currentSlider == slideCount){
-        nextButton.classList.add("disabled")
-    }else{
-        nextButton.classList.remove("disabled")
-    }
-}
-theChecker()
-
-function removeAllActive(){
-    sliderImages.forEach((ele) => {
-        ele.classList.remove("active")
-    })
-}
-
 //Show data 
 let divs = `
+<div class="container" id="hedar">
+        <header id="hed">
+            <div class="container">
+                <div class="links">
+                    <div class="two" id="two">
+                        <span id="two"></span>
+                        <span id="two"></span>
+                        <span id="two"></span>
+                    </div>
+                    <ul>
+                        <li><a href="">التفسير</a></li>
+                        <li><a href="">أحاديث</a></li>
+                        <li><a href="">القرأن الكريم</a></li>
+                        <li><a href="">الصفحه الرئسيه</a></li>
+                    </ul>
+                </div>
+                <div class="logo">
+                    <h1>الرحمن</h1>
+                </div>
+            </div>
+        </header>
+    </div>
+
 <h1 class="text" id="home"><span>الصفحه الرئسيه</span></h1>
 
 <h2 class="name-moshaf"></h2>
@@ -270,4 +217,84 @@ async function getSurah(surahServer, surahList){
             }
         });
     });
+}
+
+let hed = document.getElementById('hed');
+
+    //Header
+    document.addEventListener('scroll', function () {
+        let hed = document.getElementById('hed');
+        if (window.scrollY >= 70) {
+            hed.classList.add('active');
+        } else {
+            hed.classList.remove('active');
+        }
+    });
+
+    //Media licnks
+    
+
+    document.addEventListener('click', function (event) {
+        console.log(event.target)
+        if (event.target.id === 'two') {
+            let two = document.getElementById('two');
+            two.classList.toggle('active');
+    
+            let linksUl = document.querySelector("header .links ul");
+            if (two.classList.contains("active")) {
+                linksUl.classList.add("active");
+            } else {
+                linksUl.classList.remove("active");
+            }
+        }
+    });
+
+//Images Slider
+let sliderImages = Array.from(document.querySelectorAll('.section .images img'));
+
+
+let slideCount = sliderImages.length;
+
+let currentSlider = 1;
+
+let nextButton = document.getElementById('next');
+let prevButton = document.getElementById('prev');
+
+nextButton.addEventListener('click' , nextSlide)
+prevButton.addEventListener('click' , prevSlide)
+
+function nextSlide(){
+    currentSlider++;
+    theChecker()
+}
+
+function prevSlide(){
+    currentSlider--;
+    theChecker()
+}
+
+function theChecker(){
+
+    removeAllActive()
+
+    sliderImages[currentSlider - 1].classList.add('active');
+
+    if(currentSlider == 1){
+        prevButton.classList.add("disabled")
+    }else{
+        prevButton.classList.remove("disabled")
+    }
+
+    if(currentSlider == slideCount){
+        nextButton.classList.add("disabled")
+    }else{
+        nextButton.classList.remove("disabled")
+    }
+}
+theChecker()
+
+function removeAllActive(){
+    sliderImages.forEach((ele) => {
+        ele.classList.remove("active")
+    })
 }
