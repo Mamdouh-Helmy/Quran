@@ -250,7 +250,7 @@ async function showData(){
     const data = await res.json();
     searchResults = data.reciters;
 
-    displayReciters(searchResults.slice(0, 20));
+    displayReciters(searchResults.slice(0, 10));
 
     click.addEventListener('click', function () {
         displayReciters(searchResults);
@@ -261,7 +261,7 @@ async function showData(){
     });
 
     up.addEventListener('click', function () {
-        displayReciters(searchResults.slice(0, 20));
+        displayReciters(searchResults.slice(0, 10));
 
         click.classList.remove("disblaed")
         up.classList.remove("active")
@@ -376,7 +376,7 @@ async function getSurah(surahServer, surahList){
     const data = await res.json();
     suraNames = data.suwar;
 
-    allData(surahServer, surahList , suraNames.slice(0 , 20))
+    allData(surahServer, surahList , suraNames.slice(0 , 10))
 
     input2.addEventListener('input', function() {
         document.querySelector('.surah .container').innerHTML = ''
@@ -446,7 +446,7 @@ async function fetchData() {
 async function init() {
     await fetchData();
     
-    build(resultData.slice(0,20), document.querySelector('.Interpretation .container'));
+    build(resultData.slice(0,5), document.querySelector('.Interpretation .container'));
 
     input1.addEventListener('input', function() {
 
@@ -547,7 +547,7 @@ async function allDataMoshaf_1(){
     let allData3 = data1.data.surahs
 
     if(input2.value == ''){
-        handel2(allData3.slice(0 , 25))
+        handel2(allData3.slice(0 , 10))
     }
 
     input2.addEventListener('input', function() {
