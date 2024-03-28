@@ -94,6 +94,20 @@ let hed = document.getElementById('hed');
         }
     });
 
+
+//scrool
+let scrool = document.querySelector('#scroll i');
+
+    //Header
+    document.addEventListener('scroll', function () {
+        let scrool = document.querySelector('#scroll i');
+        if (window.scrollY >= 70) {
+            scrool.classList.add('active');
+        } else {
+            scrool.classList.remove('active');
+        }
+    });
+
     //Media licnks
     
 
@@ -214,6 +228,10 @@ let divs = `
         
     </div>
 </div>
+
+<div class="scroll" id="scroll">
+        <a href="#"><i class="fa-solid fa-arrow-up"></i></a>
+</div>
 <script src="main.js"></script>
 `
 
@@ -291,7 +309,7 @@ async function getMoshaf(re){
     const data = await res.json();
     
     const moshaf = data.reciters[0].moshaf;
-    
+
     document.body.innerHTML = divs
 
     const moshafContainer = document.getElementById('container');
@@ -473,3 +491,123 @@ function build(data, container) {
 }
 
 init();
+
+
+let allDivs = `
+<div class="container" id="hedar">
+        <header id="hed">
+            <div class="container">
+                <div class="links">
+                    <div class="two" id="two">
+                        <span id="two"></span>
+                        <span id="two"></span>
+                        <span id="two"></span>
+                    </div>
+                    <ul>
+                        <li><a href="">التفسير</a></li>
+                        <li><a href="">أحاديث</a></li>
+                        <li><a href="">القرأن الكريم</a></li>
+                        <li><a href="">الصفحه الرئسيه</a></li>
+                    </ul>
+                </div>
+                <div class="logo">
+                    <h1>الرحمن</h1>
+                </div>
+            </div>
+        </header>
+    </div>
+
+<a href=""><h1 class="text" id="home"><span>الصفحه الرئسيه</span></h1></a>
+
+<h2 class="name-moshaf"></h2>
+
+<div class="spikes" style="margin-bottom: 80px;"></div>
+
+<div class="surah-1">
+    <div class="container">
+        
+    </div>
+</div>
+
+<div class="scroll" id="scroll">
+        <a href="#"><i class="fa-solid fa-arrow-up"></i></a>
+</div>
+<script src="main.js"></script>
+`
+
+
+let allMoshaf = document.getElementById('allMoshaf');
+let input2 = document.getElementById('input2');
+
+async function allDataMoshaf_1(){
+    const res1 = await fetch(`http://api.alquran.cloud/v1/quran/quran-uthmani`);
+    const data1 = await res1.json();
+    let allData3 = data1.data.surahs
+
+    if(input2.value == ''){
+        handel2(allData3.slice(0 , 25))
+    }
+
+    input2.addEventListener('input', function() {
+
+        const searchTerm = input2.value.trim().toLowerCase();
+
+        const filteredResults = allData3.filter(re => re.name.toLowerCase().includes(searchTerm));
+
+        handel2(filteredResults);
+    });
+
+
+}
+
+function handel2(allData3){
+    allMoshaf.innerHTML = '';
+
+    allData3.forEach(ele =>{ 
+
+        let div = document.createElement('div');
+        div.className = 'boxMoshaf';
+
+        let h3 = document.createElement('h3');
+        h3.className = 'allNames';
+        h3.id = ele.number;
+        h3.textContent = ele.name
+        
+        div.appendChild(h3);
+
+        allMoshaf.appendChild(div)
+        // console.log(ele)
+    
+    })
+
+    let h3 = document.querySelectorAll(".allNames")
+    h3.forEach(ele => { 
+        
+        ele.addEventListener('click' , function (e) {
+
+            handelMohshf(e.target.id)
+        })
+    })
+}
+
+async function handelMohshf(re){
+    const res = await fetch(`http://api.alquran.cloud/v1/quran/quran-uthmani`);
+    const data = await res.json();
+    let allData = data.data.surahs[re - 1]
+
+    document.body.innerHTML = allDivs
+
+    let name_moshaf = document.querySelector('.name-moshaf')
+    name_moshaf.innerHTML = allData.name;
+
+    let surah = document.querySelector('.surah-1 .container')
+
+    let p = document.createElement('p')
+
+    allData.ayahs.forEach(ele => { 
+        p.textContent += `${ele.text} (${ele.numberInSurah}) ` 
+        surah.appendChild(p)
+    })
+}
+
+allDataMoshaf_1()
