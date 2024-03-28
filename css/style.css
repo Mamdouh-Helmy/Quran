@@ -711,7 +711,9 @@ audio::-webkit-media-controls-panel {
     text-align: center;
     cursor: pointer;
     background-color: #3d474d;
-    
+}
+.section5 .container .boxMoshaf h3{
+  user-select: none;
 }
 .surah-1 .container P{
   display: block;
