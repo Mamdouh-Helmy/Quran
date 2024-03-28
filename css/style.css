@@ -423,6 +423,9 @@ header .links ul li a:hover{
     text-align: center;
     cursor: pointer;
 }
+.section2 .container .box h3{
+  user-select: none;
+}
 @media (max-width: 767px){
 .section2 .container{
     grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
