@@ -48,6 +48,7 @@
   padding: 15px 30px;
   display: block;
   background-color: transparent;
+  user-select: none;
   border: none;
   position: relative;
   cursor: pointer;
@@ -424,9 +425,8 @@ header .links ul li a:hover{
 }
 @media (max-width: 767px){
 .section2 .container{
-    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-    
-}
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  }
 }
 .click,
 .up{
@@ -649,4 +649,87 @@ audio::-webkit-media-controls-panel {
     opacity: 0.1;
     pointer-events: none;
     background: none;
+}
+.scroll i{
+  position: fixed;
+  bottom: 20px;
+  right: -200px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  background-color: #63A4FF;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #eee;
+  font-size: 30px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+  user-select: none;
+}
+.scroll i:hover{
+  background-color: #07387c;
+}
+
+.scroll i.active{
+  right: 20px;
+}
+.div-2{
+  display: none;
+}
+.section5 {
+  padding-bottom: 100px;
+  position: relative;
+}
+.section5 .container{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+}
+@media (max-width: 767px){
+  .section5 .container{
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  }
+}
+.section5 .container .boxMoshaf{
+    padding: 10px;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #3d474d;
+    
+}
+.surah-1 .container P{
+  display: block;
+  width: 100%;
+  font-size: 30px;
+  background-color: var(--back-color);
+  padding: 20px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  word-spacing: 6px;
+  line-height: 70px;
+}
+@media (max-width: 767px){
+  .surah-1 .container P{
+    word-spacing: 0px;
+    font-size: 22px;
+  }
 }
