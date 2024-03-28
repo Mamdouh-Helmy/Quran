@@ -542,8 +542,9 @@ let allMoshaf = document.getElementById('allMoshaf');
 let input2 = document.getElementById('input2');
 
 async function allDataMoshaf_1(){
-    const res1 = await fetch(`https://api.alquran.cloud/v1/quran/quran-uthmani`);
+    const res1 = await fetch(`https://api.alquran.cloud/v1/quran/ar.alafasy`);
     const data1 = await res1.json();
+
     let allData3 = data1.data.surahs
 
     if(input2.value == ''){
@@ -578,7 +579,6 @@ function handel2(allData3){
         div.appendChild(h3);
 
         allMoshaf.appendChild(div)
-        // console.log(ele)
     
     })
 
@@ -593,9 +593,11 @@ function handel2(allData3){
 }
 
 async function handelMohshf(re){
-    const res = await fetch(`https://api.alquran.cloud/v1/quran/quran-uthmani`);
+    const res = await fetch(`https://api.alquran.cloud/v1/quran/ar.alafasy`);
     const data = await res.json();
     let allData = data.data.surahs[re - 1]
+
+    console.log(allData)
 
     document.body.innerHTML = allDivs
 
