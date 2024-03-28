@@ -595,7 +595,7 @@ function handel2(allData3){
 async function handelMohshf(re){
     const res = await fetch(`https://api.alquran.cloud/v1/quran/ar.alafasy`);
     const data = await res.json();
-    let allData = data.data.surahs[re - 1]
+    let allData = data.data.surahs[re - 1];
 
     console.log(allData)
 
