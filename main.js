@@ -190,6 +190,7 @@ let divs = `
                         <span id="two"></span>
                     </div>
                     <ul>
+                        <li><a href="">المصحف</a></li>
                         <li><a href="">التفسير</a></li>
                         <li><a href="">أحاديث</a></li>
                         <li><a href="">القرأن الكريم</a></li>
@@ -504,6 +505,7 @@ let allDivs = `
                         <span id="two"></span>
                     </div>
                     <ul>
+                        <li><a href="">المصحف</a></li>
                         <li><a href="">التفسير</a></li>
                         <li><a href="">أحاديث</a></li>
                         <li><a href="">القرأن الكريم</a></li>
