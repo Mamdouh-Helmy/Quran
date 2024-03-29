@@ -597,8 +597,6 @@ async function handelMohshf(re){
     const data = await res.json();
     let allData = data.data.surahs[re - 1];
 
-    console.log(allData)
-
     document.body.innerHTML = allDivs
 
     let name_moshaf = document.querySelector('.name-moshaf')
