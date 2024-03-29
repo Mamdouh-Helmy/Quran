@@ -250,7 +250,7 @@ async function showData(){
     const data = await res.json();
     searchResults = data.reciters;
 
-    displayReciters(searchResults.slice(0, 10));
+    displayReciters(searchResults);
 
     click.addEventListener('click', function () {
         displayReciters(searchResults);
