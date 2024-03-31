@@ -376,7 +376,7 @@ async function getSurah(surahServer, surahList){
     const data = await res.json();
     suraNames = data.suwar;
 
-    allData(surahServer, surahList , suraNames)
+    allData(surahServer, surahList.slice(0 , 80) , suraNames)
 
     input2.addEventListener('input', function() {
         document.querySelector('.surah .container').innerHTML = ''
@@ -409,7 +409,7 @@ function allData(surahServer, surahList , suraNames){
                     suraIdWithLeadingZero = `00${suraNumber}`;
                 } else if (suraNumber < 100) {
                     suraIdWithLeadingZero = `0${suraNumber}`;
-                } else {
+                } else if (suraNumber >= 100){
                     suraIdWithLeadingZero = `${suraNumber}`;
                 }
 
