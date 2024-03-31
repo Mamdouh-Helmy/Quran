@@ -250,7 +250,7 @@ async function showData(){
     const data = await res.json();
     searchResults = data.reciters;
 
-    displayReciters(searchResults);
+    displayReciters(searchResults.slice(0, 10));
 
     click.addEventListener('click', function () {
         displayReciters(searchResults);
@@ -376,7 +376,7 @@ async function getSurah(surahServer, surahList){
     const data = await res.json();
     suraNames = data.suwar;
 
-    allData(surahServer, surahList , suraNames.slice(0 , 10))
+    allData(surahServer, surahList , suraNames)
 
     input2.addEventListener('input', function() {
         document.querySelector('.surah .container').innerHTML = ''
@@ -596,6 +596,8 @@ async function handelMohshf(re){
     const res = await fetch(`https://api.alquran.cloud/v1/quran/ar.alafasy`);
     const data = await res.json();
     let allData = data.data.surahs[re - 1];
+
+    console.log(allData)
 
     document.body.innerHTML = allDivs
 
